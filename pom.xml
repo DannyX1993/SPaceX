@@ -9,7 +9,6 @@
 	<groupId>spacex.team</groupId>
 	<version>0.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
 	<name>${project.groupId}.${project.artifactId}</name>
 
 	<properties>
@@ -22,15 +21,17 @@
 		<jdk.version>1.8</jdk.version>
 		<!-- Maven -->
 		<maven.compiler.version>3.5</maven.compiler.version>
-		<!-- Maven. Test de Integración -->
 		<maven.failsafe.version>2.19.1</maven.failsafe.version>
+		<tomcat7.maven.version>2.2</tomcat7.maven.version>
+		<!-- API REST -->
+		<javax.servlet.api.version>3.0.1</javax.servlet.api.version>
 		<!-- Pruebas -->
 		<junit.version>4.11</junit.version>
 		<!-- Logs -->
 		<log4j.version>2.8</log4j.version>
 		<!-- Data Base -->
-		<database.driver>com.mysql.jdbc.Driver</database.driver>
-		<database.url>jdbc:mysql://localhost:3306/spacex</database.url>
+		<mysql.connector.version>6.0.6</mysql.connector.version>
+		<hibernate.version>4.3.8.Final</hibernate.version>
 		<!-- SPRING -->
 		<springframework.version>5.0.1.RELEASE</springframework.version>
 		<springframework.data.version>2.0.1.RELEASE</springframework.data.version>
@@ -50,8 +51,13 @@
 			</activation>
 			<properties>
 				<logs.level.root>debug</logs.level.root>
+				<logs.path>target/logs</logs.path>
+				<database.driver>com.mysql.jdbc.Driver</database.driver>
+				<database.url>jdbc:mysql://localhost:3306/spacex</database.url>
 				<database.user>root</database.user>
 				<database.password>root</database.password>
+				<hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto>
+				<tomcat.url>http://localhost:8080/manager/text</tomcat.url>
 			</properties>
 		</profile>
 		<!-- mvn install -Denvironment.type=preproduction -->
@@ -65,8 +71,13 @@
 			</activation>
 			<properties>
 				<logs.level.root>info</logs.level.root>
-				<database.user>myUser</database.user>
-				<database.password>myPass</database.password>
+				<logs.path>target/logs</logs.path>
+				<database.driver>com.mysql.jdbc.Driver</database.driver>
+				<database.url>jdbc:mysql://localhost:3306/spring</database.url>
+				<database.user>root</database.user>
+				<database.password></database.password>
+				<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
+				<tomcat.url>http://localhost:8080/manager/text</tomcat.url>
 			</properties>
 		</profile>
 		<!-- mvn install -Denvironment.type=production -->
@@ -80,8 +91,13 @@
 			</activation>
 			<properties>
 				<logs.level.root>error</logs.level.root>
-				<database.user>otherUser</database.user>
-				<database.password>otherPass</database.password>
+				<logs.path>target/logs</logs.path>
+				<database.driver>com.mysql.jdbc.Driver</database.driver>
+				<database.url>jdbc:mysql://localhost:3306/spring</database.url>
+				<database.user>root</database.user>
+				<database.password></database.password>
+				<hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto>
+				<tomcat.url>http://localhost:8080/manager/text</tomcat.url>
 			</properties>
 		</profile>
 	</profiles>
@@ -109,21 +125,77 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 		</dependency>
-		<!-- SPRING -->
+		<!-- Web. Api Rest -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet.api.version}</version>
+		</dependency>
+		<!-- SPRING: Web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		<!-- SPRING: core -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${springframework.version}</version>
 		</dependency>
+		<!-- SPRING: AOP -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		<!-- SPRING: security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${springframework.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${springframework.security.version}</version>
+		</dependency>
+		<!-- SPRING: Persistencia -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 			<version>${springframework.data.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${springframework.security.version}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>5.0.2.RELEASE</version>
+		</dependency>
+		<!-- Base de datos -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -174,6 +246,18 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!--<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>${tomcat7.maven.version}</version>
+				<configuration>
+					<path>/${project.build.finalName}</path>
+					<update>true</update>
+					<url>${tomcat.url}</url>
+					<username>nyuron</username>
+					<password>nyuron.15</password>
+				</configuration>
+			</plugin>-->
 		</plugins>
 	</build>
 
