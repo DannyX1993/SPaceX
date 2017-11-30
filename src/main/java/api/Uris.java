@@ -4,6 +4,7 @@ public class Uris {
 
     public static final String SERVLET_MAP = "/api";
     public static final String VERSION = "/v0";
-    public static final String PLAYERS = "/players";
+    public static final String USERS = "/users";
+    public static final String USERS_VERSION = "/version";
 
 }

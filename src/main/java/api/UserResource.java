@@ -6,9 +6,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(Uris.VERSION)
-public class PlayerResource {
+public class UserResource {
 
-    @RequestMapping(value = Uris.PLAYERS, method = RequestMethod.GET)
+    @RequestMapping(value = Uris.USERS + Uris.USERS_VERSION, method = RequestMethod.GET)
+    public String version()  {
+        return "{version: " + Uris.VERSION.toString() + "}";
+    }
+
+    @RequestMapping(value = Uris.USERS, method = RequestMethod.GET)
     public void userRegistration()  {
         System.out.println("Entra GET /players");
     }

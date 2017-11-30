@@ -6,8 +6,8 @@ import java.util.Date;
 /**
  * Created by danielgonzalez on 28/11/17.
  */
-@Entity(name = "Players")
-public class Player {
+@Entity(name = "Users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,9 +20,17 @@ public class Player {
     @Temporal(TemporalType.TIME)
     private Date lastAccess;
 
-    public Player() {}
+    @Column(nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private Role role;
 
-    public Player(Integer id, String nick) {
+    @Column(nullable = false)
+    // Para guardar datos privados de usuarios por ejemplo -> @ColumnTransformer(read = “pgp_sym_decrypt(creditCardNumber, ‘mySecretKey’)”, write = “pgp_sym_encrypt(?, ‘mySecretKey’)”)
+    private String password;
+
+    public User() {}
+
+    public User(Integer id, String nick) {
         this.id = id;
         this.nickname = nick;
     }
@@ -32,7 +40,7 @@ public class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Player that = (Player) o;
+        User that = (User) o;
         return id != null ? !id.equals(that.id) : that.id != null;
     }
 
@@ -64,4 +72,8 @@ public class Player {
     public void setLastAccess(Date access) {
         this.lastAccess = access;
     }
+
+    public Role getRole() { return this.role; }
+
+    public void setRole(Role role) { this.role = role; }
 }

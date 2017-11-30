@@ -21,7 +21,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.PLAYERS).access("hasRole('ROLE_USER')")
+                .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.USERS).access("hasRole('ROLE_USER')")
+                .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.USERS + Uris.USERS_VERSION).access("hasRole('ROLE_USER')")
                 .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + "/**").permitAll()
                 .and().formLogin();
 
