@@ -7,7 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-public abstract class Encrypting {
+public interface Encrypting {
 
     public static byte[] encrypt(EncryptingAlgorithm algorithm, String message) {
         byte[] digest = null;
@@ -33,7 +33,7 @@ public abstract class Encrypting {
             } else
                 hash += (Integer.toHexString(b));
         }
-        return hash.toString();
+        return hash;
     }
 
     public static String base64Encrypt(EncryptingAlgorithm algorithm, String message) {
@@ -44,6 +44,6 @@ public abstract class Encrypting {
     public static String base64UrlSafeEncrypt(EncryptingAlgorithm algorithm, String message) {
         byte[] digest = Encrypting.encrypt(algorithm, message);
         String code64Url = Base64.getUrlEncoder().encodeToString(digest);
-        return code64Url.substring(0, code64Url.indexOf("="));
+        return code64Url.substring(0, code64Url.indexOf('='));
     }
 }

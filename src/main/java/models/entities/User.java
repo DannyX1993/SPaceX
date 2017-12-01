@@ -17,7 +17,7 @@ public class User {
     private String nickname;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastAccess;
 
     @Column(nullable = false)
@@ -25,14 +25,18 @@ public class User {
     private Role role;
 
     @Column(nullable = false)
-    // Para guardar datos privados de usuarios por ejemplo -> @ColumnTransformer(read = “pgp_sym_decrypt(creditCardNumber, ‘mySecretKey’)”, write = “pgp_sym_encrypt(?, ‘mySecretKey’)”)
+    // Note: @ColumnTransformer(read = “pgp_sym_decrypt(creditCardNumber, ‘mySecretKey’)”, write = “pgp_sym_encrypt(?, ‘mySecretKey’)”)
     private String password;
 
-    public User() {}
+    public User() {
 
-    public User(Integer id, String nick) {
-        this.id = id;
+    }
+
+    public User(String nick, String passw, Role role, Date lastAccess) {
         this.nickname = nick;
+        this.password = passw;
+        this.role = role;
+        this.lastAccess = lastAccess;
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {PackageNames.REST_API, PackageNames.ENTITIES})
+@ComponentScan(basePackages = {PackageNames.REST_API, PackageNames.CONTROLLERS, PackageNames.DAOS, PackageNames.ENTITIES})
 public class WebConfig implements WebMvcConfigurer {
 
     // CORS

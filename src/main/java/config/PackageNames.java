@@ -6,8 +6,13 @@ public class PackageNames {
 
     public static final String REST_API = "api";
 
+    public static final String CONTROLLERS = "controllers";
+
     public static final String ENTITIES = "models.entities";
 
     public static final String DAOS = "models.daos";
 
+    private PackageNames() {
+
+    }
 }

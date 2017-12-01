@@ -7,4 +7,8 @@ public class Uris {
     public static final String USERS = "/users";
     public static final String USERS_VERSION = "/version";
 
+    private Uris() {
+
+    }
+
 }

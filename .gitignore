@@ -2,6 +2,7 @@
 /target/
 /.classpath
 /.project
-/.sonar/
+**/.sonar/
 /.idea/
 SPaceX.iml
+/src/main/webapp

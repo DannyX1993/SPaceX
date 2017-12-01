@@ -3,6 +3,7 @@ package config;
 import api.Uris;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,9 +21,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.USERS).access("hasRole('ROLE_USER')")
-                .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + Uris.USERS + Uris.USERS_VERSION).access("hasRole('ROLE_USER')")
+        http.csrf().disable().authorizeRequests()
+                .antMatchers(HttpMethod.GET, Uris.SERVLET_MAP + Uris.VERSION + Uris.USERS + Uris.USERS_VERSION).access("hasRole('ROLE_USER')")
+                .antMatchers(HttpMethod.POST, Uris.SERVLET_MAP + Uris.VERSION + Uris.USERS).permitAll()
+                .antMatchers(HttpMethod.GET, Uris.SERVLET_MAP + Uris.VERSION + Uris.USERS).access("hasRole('ROLE_USER')")
                 .antMatchers(Uris.SERVLET_MAP + Uris.VERSION + "/**").permitAll()
                 .and().formLogin();
 
